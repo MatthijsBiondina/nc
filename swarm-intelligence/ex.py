@@ -1,5 +1,6 @@
 import numpy as np
 import sklearn.datasets
+import copy
 
 #initialize current position
 x0 = np.array([[5,5],[8,3],[6,7]])
@@ -26,4 +27,35 @@ x = lambda X,V: X+V
 #print(x1)
 
 data = sklearn.datasets.load_iris()
-print(data)
+X = sklearn.preprocessing.normalize(data.data)
+
+y = data.target
+
+N = 3
+
+def init_clustering_or_speed():
+    return np.array([[np.random.uniform(-2, 2) for j in X.T] for i in range(N)])
+
+def fitness(clustering, X):
+    return sum(min(np.linalg.norm(sample-c) for c in clustering) for sample in X) / len(X)
+
+particles = [init_clustering_or_speed() for i in range(100)]
+local_best_x = copy.deepcopy(particles)
+local_best_f = np.array([fitness(p, X) for p in particles])
+
+v = init_clustering_or_speed() / 4
+
+print(fitness(particles[0], X))
+
+for i in range(100):
+    particles += v
+    is_better = [fitness(p, X) < local_best_f[i] for i, p in enumerate(particles)]
+    local_best_f[is_better] = [fitness(p, X) for p in particles]
+    local_best_x[is_better] = particles[is_better]
+    global_best_f = min(local_best_f)
+    global_best_x = local_best_x[argmin(local_best_f)]
+    # v = 
+
+
+
+
