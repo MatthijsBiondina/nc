@@ -1,5 +1,6 @@
 import numpy as np
 import sklearn.datasets
+import sklearn.cluster
 import copy
 
 #initialize current position
@@ -31,31 +32,41 @@ X = sklearn.preprocessing.normalize(data.data)
 
 y = data.target
 
-N = 3
+Nclusters = 3
+Nparticles = 100
+w = .5
 
-def init_clustering_or_speed():
-    return np.array([[np.random.uniform(-2, 2) for j in X.T] for i in range(N)])
+def init_clustering_or_speed_or_r(min_=-2, max_=2):
+    return np.array([[np.random.uniform(min_, max_) for j in range(X.shape[1])] for i in range(Nclusters)])
 
 def fitness(clustering, X):
     return sum(min(np.linalg.norm(sample-c) for c in clustering) for sample in X) / len(X)
 
-particles = [init_clustering_or_speed() for i in range(100)]
+particles = np.array([init_clustering_or_speed_or_r() for i in range(100)])
 local_best_x = copy.deepcopy(particles)
 local_best_f = np.array([fitness(p, X) for p in particles])
 
-v = init_clustering_or_speed() / 4
+v = np.array([init_clustering_or_speed_or_r() / 4 for p in particles])
 
 print(fitness(particles[0], X))
 
-for i in range(100):
+for i in range(1000):
     particles += v
-    is_better = [fitness(p, X) < local_best_f[i] for i, p in enumerate(particles)]
-    local_best_f[is_better] = [fitness(p, X) for p in particles]
+    scores = [fitness(p, X) for p in particles]
+    is_better = [s < local_best_f[i] for i, s in enumerate(scores)]
+    local_best_f[is_better] = [s for s, b in zip(scores, is_better) if b]
     local_best_x[is_better] = particles[is_better]
     global_best_f = min(local_best_f)
-    global_best_x = local_best_x[argmin(local_best_f)]
-    # v = 
+    global_best_x = local_best_x[np.argmin(local_best_f)]
+    v = w * v
+    r1 = init_clustering_or_speed_or_r(0, 1)
+    r2 = init_clustering_or_speed_or_r(0, 1)
+    for i, velo in enumerate(v):
+        velo += r1 * (local_best_x[i] - particles[i]) + r2 * (global_best_x - particles[i])
 
+print(fitness(particles[0], X))
+print(X.shape)
 
-
-
+kmeans_model = sklearn.cluster.KMeans(3, init='random')
+kmeans_model.fit(X)
+print(fitness(kmeans_model.cluster_centers_, X))
