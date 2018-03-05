@@ -48,7 +48,7 @@ local_best_f = np.array([fitness(p, X) for p in particles])
 
 v = np.array([init_clustering_or_speed_or_r() / 4 for p in particles])
 
-print(fitness(particles[0], X))
+print(fitness(particles[0], X) ** .5)
 
 for i in range(1000):
     particles += v
@@ -64,9 +64,10 @@ for i in range(1000):
     for i, velo in enumerate(v):
         velo += r1 * (local_best_x[i] - particles[i]) + r2 * (global_best_x - particles[i])
 
-print(fitness(particles[0], X))
+print(fitness(particles[0], X) ** .5)
 print(X.shape)
 
 kmeans_model = sklearn.cluster.KMeans(3, init='random')
 kmeans_model.fit(X)
-print(fitness(kmeans_model.cluster_centers_, X))
+
+print(fitness(kmeans_model.cluster_centers_, X) ** .5)
