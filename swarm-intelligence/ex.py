@@ -26,4 +26,21 @@ x = lambda X,V: X+V
 #print(x1)
 
 data = sklearn.datasets.load_iris()
-print(data)
+Xdata = sklearn.preprocessing.normalize(data.data)
+Ydata = data.target
+N = 3
+
+def initialize(mi,ma):
+	return np.array([np.random.uniform(-1,1) for i in range(len(data[1]*N))])
+
+#x: [1x12]
+def fitness(x):
+	X = [ [x[i],x[i+1],x[i+2],x[i+3]] for i in [0,4,8] ]
+	print(X)
+
+def flatten(x):
+	return [
+
+a = [1,2,3,4,5,6,7,8,9,10,11,12]
+print(flatten(a))
+	
