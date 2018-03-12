@@ -1,0 +1,39 @@
+
+*** These modified files were found in JOE when it aborted on Mon Mar 12 14:27:07 2018
+*** JOE was aborted because the terminal closed
+
+*** File '* Build Log *'
+
+JOE: cd /home/mbiondina/Documents/Natural Computing
+
+/bin/sh: 3: fuck: not found
+
+JOE: [31mFAIL[0m (exit status = 127)
+
+
+*** File '/home/mbiondina/Documents/Natural Computing/.git/MERGE_MSG'
+Merge branch 'master' of https://github.com/MatthijsBiondina/nc
+
+# Please enter a commit message to explain why this merge is necessary,
+# especially if it merges an updated upstream into a topic branch.
+#
+# Lines starting with '#' will be ignored, and an empty message aborts
+# the commit.
+
+*** File '(Unnamed)'
+fuck off
+
+*** File '(Unnamed)'
+/home/mbiondina/hp/hp/.git/COMMIT_EDITMSG
+/home/mbiondina/hp/hp/.git/MERGE_MSG
+/home/mbiondina/hp/.git/COMMIT_EDITMSG
+/home/mbiondina/hp/.git/MERGE_MSG
+/home/mbiondina/Workspace/hp/.git/MERGE_MSG
+/home/mbiondina/Documents/Natural Computing/.git/MERGE_MSG
+* Build Log *
+
+*** File '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
